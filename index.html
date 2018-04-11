@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+              <!-- Linking page to CSS -->
+              <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+              <!-- Linking page to JQuery -->
+              <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <h3>My Google Maps Test</h3>
+    <div id="map"></div>
+    <script>
+            function initMap() {
+              var uluru = {lat: -25.363, lng: 131.044};
+              var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 4,
+                center: uluru
+              });
+              var marker = new google.maps.Marker({
+                position: uluru,
+                map: map
+              });
+            }
+          </script>
+          <script async defer
+          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADQWA9pS3wGpWVW7yxepN2ms5uk4h80Uk&callback=initMap">
+          </script>
+            <!-- Linking page to .js file -->
+            <script type="text/javascript" src="assets/javascript/maps.js"></script>
+  </body>
+</html>
