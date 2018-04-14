@@ -2,12 +2,32 @@
 var map, places, infoWindow;
 var markers = [];
 var autocomplete;
+var food = ["Spicy", "Fish", "Sushi", "Sweet", "Pizza"];
+var chosenFood = [];
 // Currently restrict searchs in autocomplete to USA only
 var countryRestrict = { 'country': 'us' };
 // Grab marker image from google documentation
 var MARKER_PATH = 'https://developers.google.com/maps/documentation/javascript/images/marker_green';
 // use RegExp to shorten URLs to simple ones
 var urlnameRegexp = new RegExp('^https?://.+?/');
+
+// // Create Buttons based on strings inside variable food
+// var food = ["Spicy", "Fish", "Sushi", "Sweet"];
+//       function createButtons(food) {
+//         for (var i = 0; i < food.length; i++) {
+//           var a = $("<button>");
+//           a.addClass("food");
+//           a.attr("data-name", food[i]);
+//           a.text(food[i]);
+//           $("#buttons-view").append(a);
+//         }
+//         $("#buttons-view").on("click", ".food", function() {
+//         var filter = $(this).attr("data-name");
+//         console.log(filter);
+//       });
+//       }
+
+//       createButtons();
 
 // This function is what generates the map when page is loaded with it starting in the USA
 function initMap() {
@@ -22,6 +42,7 @@ function initMap() {
 
   infoWindow = new google.maps.InfoWindow({
     content: document.getElementById('info-content')
+
   });
 
   // Create the autocomplete object based on what the user inputs
@@ -49,12 +70,46 @@ function onPlaceChanged() {
   }
 }
 
+// var food = ["Spicy", "Fish", "Sushi", "Sweet", "Pizza"];
+// var chosenFood = [];
+// function createButtons() {
+//   console.log("inside function");
+//   for (var i = 0; i < food.length; i++) {
+//     var a = $("<button>");
+//     a.addClass("food");
+//     a.attr("data-name", food[i]);
+//     a.text(food[i]);
+//     $("#foodButtons").append(a);
+//   }
+//   $("#foodButtons").on("click", ".food", function () {
+//       // for (var i = 0; i < food.length; i++) {
+//       var filter = $(this).attr("data-name");
+//       // }
+//       console.log(filter);
+//       var foodPush = [];
+//       foodPush.push(filter);
+//       chosenFood.push(foodPush);
+//       // chosenFood.push(filter);
+//       // console.log(chosenFood);
+
+//   });
+// };
+// console.log(chosenFood);
+
+// createButtons();
+
+
 // Search for restaurants in User City and show Icons within user field of view
 function search() {
   var search = {
     bounds: map.getBounds(),
-    types: ['restaurant']
-  };
+    types: ['restaurant'],
+    keyword: chosenFood
+  }
+  console.log(search.keyword);
+
+
+
 
   places.nearbySearch(search, function (results, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
@@ -77,10 +132,40 @@ function search() {
         google.maps.event.addListener(markers[i], 'click', showInfoWindow);
         setTimeout(dropMarker(i), i * 100);
         addResult(results[i], i);
+        
+
       }
+      createButtons();
+      search();
     }
   });
 }
+
+function createButtons() {
+  console.log("inside function");
+  for (var i = 0; i < food.length; i++) {
+    var a = $("<button>");
+    a.addClass("food");
+    a.attr("data-name", food[i]);
+    a.text(food[i]);
+    $("#foodButtons").append(a);
+  }
+  $("#foodButtons").on("click", ".food", function () {
+    // for (var i = 0; i < food.length; i++) {
+    var filter = $(this).attr("data-name");
+    // }
+    console.log(filter);
+    var foodPush = [];
+    foodPush.push(filter);
+    chosenFood.push(foodPush);
+    // chosenFood.push(filter);
+    // console.log(chosenFood);
+
+  });
+};
+console.log(chosenFood);
+
+
 
 // Function to clear markers when needed
 function clearMarkers() {
@@ -116,6 +201,7 @@ function addResult(result, i) {
   icon.src = markerIcon;
   icon.setAttribute('class', 'placeIcon');
   icon.setAttribute('className', 'placeIcon');
+  icon.setAttribute('id', 'crispy');
   var name = document.createTextNode(result.name);
   iconTd.appendChild(icon);
   nameTd.appendChild(name);
@@ -181,7 +267,7 @@ function buildIWContent(place) {
     document.getElementById('rating-row').style.display = 'none';
   }
 
-//Use Regexp to shorten URLS to simple ones to fit in info window
+  //Use Regexp to shorten URLS to simple ones to fit in info window
   if (place.website) {
     var fullUrl = place.website;
     var website = urlnameRegexp.exec(place.website);
@@ -195,3 +281,6 @@ function buildIWContent(place) {
     document.getElementById('website-row').style.display = 'none';
   }
 }
+
+// Call function createButtons
+// createButtons();
