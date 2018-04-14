@@ -29,6 +29,11 @@ var urlnameRegexp = new RegExp('^https?://.+?/');
 
 //       createButtons();
 
+/**************************************************
+ *        Start of Map and Marker Code            *
+***************************************************/
+
+
 // This function is what generates the map when page is loaded with it starting in the USA
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
@@ -70,35 +75,6 @@ function onPlaceChanged() {
   }
 }
 
-// var food = ["Spicy", "Fish", "Sushi", "Sweet", "Pizza"];
-// var chosenFood = [];
-// function createButtons() {
-//   console.log("inside function");
-//   for (var i = 0; i < food.length; i++) {
-//     var a = $("<button>");
-//     a.addClass("food");
-//     a.attr("data-name", food[i]);
-//     a.text(food[i]);
-//     $("#foodButtons").append(a);
-//   }
-//   $("#foodButtons").on("click", ".food", function () {
-//       // for (var i = 0; i < food.length; i++) {
-//       var filter = $(this).attr("data-name");
-//       // }
-//       console.log(filter);
-//       var foodPush = [];
-//       foodPush.push(filter);
-//       chosenFood.push(foodPush);
-//       // chosenFood.push(filter);
-//       // console.log(chosenFood);
-
-//   });
-// };
-// console.log(chosenFood);
-
-// createButtons();
-
-
 // Search for restaurants in User City and show Icons within user field of view
 function search() {
   var search = {
@@ -107,9 +83,6 @@ function search() {
     keyword: chosenFood
   }
   console.log(search.keyword);
-
-
-
 
   places.nearbySearch(search, function (results, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
@@ -135,37 +108,9 @@ function search() {
         
 
       }
-      createButtons();
-      search();
     }
   });
 }
-
-function createButtons() {
-  console.log("inside function");
-  for (var i = 0; i < food.length; i++) {
-    var a = $("<button>");
-    a.addClass("food");
-    a.attr("data-name", food[i]);
-    a.text(food[i]);
-    $("#foodButtons").append(a);
-  }
-  $("#foodButtons").on("click", ".food", function () {
-    // for (var i = 0; i < food.length; i++) {
-    var filter = $(this).attr("data-name");
-    // }
-    console.log(filter);
-    var foodPush = [];
-    foodPush.push(filter);
-    chosenFood.push(foodPush);
-    // chosenFood.push(filter);
-    // console.log(chosenFood);
-
-  });
-};
-console.log(chosenFood);
-
-
 
 // Function to clear markers when needed
 function clearMarkers() {
@@ -217,6 +162,47 @@ function clearResults() {
     results.removeChild(results.childNodes[0]);
   }
 }
+
+/**************************************************
+ *         End of Map and Marker Code             *
+***************************************************/
+
+/**************************************************
+ *            Start of Filters Code               *
+***************************************************/
+
+function createButtons() {
+  console.log("inside function");
+  for (var i = 0; i < food.length; i++) {
+    var a = $("<button>");
+    a.addClass("food");
+    a.attr("data-name", food[i]);
+    a.text(food[i]);
+    $("#foodButtons").append(a);
+  }
+  $("#foodButtons").on("click", ".food", function () {
+    // for (var i = 0; i < food.length; i++) {
+    var filter = $(this).attr("data-name");
+    // }
+    console.log(filter);
+    var foodPush = [];
+    foodPush.push(filter);
+    chosenFood.push(foodPush);
+    // chosenFood.push(filter);
+    // console.log(chosenFood);
+    search();
+  });
+};
+console.log(chosenFood);
+
+/**************************************************
+ *             End of Filters Code                *
+***************************************************/
+
+
+/**************************************************
+ *     Start of Restuarant Information Code       *
+***************************************************/
 
 // Function will display restaurant info in small window
 function showInfoWindow() {
@@ -282,5 +268,10 @@ function buildIWContent(place) {
   }
 }
 
+/**************************************************
+ *      End of Restuarant Information Code        *
+***************************************************/
+
+
 // Call function createButtons
-// createButtons();
+createButtons();
