@@ -11,24 +11,6 @@ var MARKER_PATH = 'https://developers.google.com/maps/documentation/javascript/i
 // use RegExp to shorten URLs to simple ones
 var urlnameRegexp = new RegExp('^https?://.+?/');
 
-// // Create Buttons based on strings inside variable food
-// var food = ["Spicy", "Fish", "Sushi", "Sweet"];
-//       function createButtons(food) {
-//         for (var i = 0; i < food.length; i++) {
-//           var a = $("<button>");
-//           a.addClass("food");
-//           a.attr("data-name", food[i]);
-//           a.text(food[i]);
-//           $("#buttons-view").append(a);
-//         }
-//         $("#buttons-view").on("click", ".food", function() {
-//         var filter = $(this).attr("data-name");
-//         console.log(filter);
-//       });
-//       }
-
-//       createButtons();
-
 // This function is what generates the map when page is loaded with it starting in the USA
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
@@ -70,8 +52,6 @@ function onPlaceChanged() {
   }
 }
 
-// var food = ["Spicy", "Fish", "Sushi", "Sweet", "Pizza"];
-// var chosenFood = [];
 // function createButtons() {
 //   console.log("inside function");
 //   for (var i = 0; i < food.length; i++) {
@@ -95,7 +75,6 @@ function onPlaceChanged() {
 //   });
 // };
 // console.log(chosenFood);
-
 // createButtons();
 
 
@@ -107,8 +86,6 @@ function search() {
     keyword: chosenFood
   }
   console.log(search.keyword);
-
-
 
 
   places.nearbySearch(search, function (results, status) {
@@ -132,13 +109,11 @@ function search() {
         google.maps.event.addListener(markers[i], 'click', showInfoWindow);
         setTimeout(dropMarker(i), i * 100);
         addResult(results[i], i);
-        
-
       }
       createButtons();
-      search();
     }
   });
+  search();
 }
 
 function createButtons() {
@@ -160,7 +135,6 @@ function createButtons() {
     chosenFood.push(foodPush);
     // chosenFood.push(filter);
     // console.log(chosenFood);
-
   });
 };
 console.log(chosenFood);
@@ -281,6 +255,3 @@ function buildIWContent(place) {
     document.getElementById('website-row').style.display = 'none';
   }
 }
-
-// Call function createButtons
-// createButtons();
