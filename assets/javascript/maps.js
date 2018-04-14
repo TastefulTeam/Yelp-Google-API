@@ -87,7 +87,6 @@ function search() {
   }
   console.log(search.keyword);
 
-
   places.nearbySearch(search, function (results, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
       clearResults();
@@ -110,7 +109,6 @@ function search() {
         setTimeout(dropMarker(i), i * 100);
         addResult(results[i], i);
       }
-      createButtons();
     }
   });
   search();
@@ -191,6 +189,47 @@ function clearResults() {
     results.removeChild(results.childNodes[0]);
   }
 }
+
+/**************************************************
+ *         End of Map and Marker Code             *
+***************************************************/
+
+/**************************************************
+ *            Start of Filters Code               *
+***************************************************/
+
+function createButtons() {
+  console.log("inside function");
+  for (var i = 0; i < food.length; i++) {
+    var a = $("<button>");
+    a.addClass("food");
+    a.attr("data-name", food[i]);
+    a.text(food[i]);
+    $("#foodButtons").append(a);
+  }
+  $("#foodButtons").on("click", ".food", function () {
+    // for (var i = 0; i < food.length; i++) {
+    var filter = $(this).attr("data-name");
+    // }
+    console.log(filter);
+    var foodPush = [];
+    foodPush.push(filter);
+    chosenFood.push(foodPush);
+    // chosenFood.push(filter);
+    // console.log(chosenFood);
+    search();
+  });
+};
+console.log(chosenFood);
+
+/**************************************************
+ *             End of Filters Code                *
+***************************************************/
+
+
+/**************************************************
+ *     Start of Restuarant Information Code       *
+***************************************************/
 
 // Function will display restaurant info in small window
 function showInfoWindow() {
