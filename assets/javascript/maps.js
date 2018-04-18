@@ -83,11 +83,15 @@ function search() {
   var search = {
     bounds: map.getBounds(),
     types: ['restaurant'],
-    keyword: chosenFood
+    keyword: chosenFood[chosenFood.length-1]
+    //chosenFood
+    // foodPush
+    //restaurantLog
   }
-  console.log(search.keyword);
+  console.log(search.chosenFood);
 
   places.nearbySearch(search, function (results, status) {
+    console.log(results);
     if (status === google.maps.places.PlacesServiceStatus.OK) {
       clearResults();
       clearMarkers();
@@ -113,31 +117,6 @@ function search() {
   });
   search();
 }
-
-function createButtons() {
-  console.log("inside function");
-  for (var i = 0; i < food.length; i++) {
-    var a = $("<button>");
-    a.addClass("food");
-    a.attr("data-name", food[i]);
-    a.text(food[i]);
-    $("#foodButtons").append(a);
-  }
-  $("#foodButtons").on("click", ".food", function () {
-    // for (var i = 0; i < food.length; i++) {
-    var filter = $(this).attr("data-name");
-    // }
-    console.log(filter);
-    var foodPush = [];
-    foodPush.push(filter);
-    chosenFood.push(foodPush);
-    // chosenFood.push(filter);
-    // console.log(chosenFood);
-  });
-};
-console.log(chosenFood);
-
-
 
 // Function to clear markers when needed
 function clearMarkers() {
@@ -213,8 +192,24 @@ function createButtons() {
     // }
     console.log(filter);
     var foodPush = [];
+    // Below is the code that will call the restuarants that are stored in the array based on the click function
+    var restaurantLog = [];
+    // find the "copy pathway" to these results in the console.log.
+    // restaurantLog.push(results.)
+    // Once all the desired items are in the restuarantlog array, call the var restaurantLog name in the search function on line 82
     foodPush.push(filter);
-    chosenFood.push(foodPush);
+    console.log(foodPush);
+    var found = foodPush.find(function(element) {
+      // return element === filter;
+      if(element === filter) {
+        console.log(found);
+        console.log(element);
+        // foodPush.push(filter);
+        chosenFood.push(element);
+        console.log(chosenFood);
+      }
+      });
+    // chosenFood.push(foodPush);
     // chosenFood.push(filter);
     // console.log(chosenFood);
     search();
@@ -294,3 +289,4 @@ function buildIWContent(place) {
     document.getElementById('website-row').style.display = 'none';
   }
 }
+createButtons();
